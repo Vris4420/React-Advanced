@@ -1,27 +1,32 @@
-import { useRef } from "react"
-import { CustomInput } from "./CustomInput";
-
+import { useState } from "react";
+import { CustomModal } from "./CustomModal";
+import { DialogModal } from "./DialogModal";
 
 function App() {
-
-  const inputRef = useRef()
-
-  function handleSubmit(e){
-    e.preventDefault();
-    console.log(inputRef.current.value)
-  }
+  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
+  const [isDialogModalOpen, setIsDialogModalOpen] = useState(false);
 
   return (
-  <>
-  <h2>Demostration of forwardRef function</h2>
-    <form onSubmit={handleSubmit}>
-      <CustomInput ref={inputRef}/>
-      <button type="submit">Submit</button>
-    </form>
-  </>
-  )
+    <div style={{position:'relative', marginTop:'20px'}}>
+      <button onClick={() => setIsCustomModalOpen(true)}>
+        Show Custom Modal
+    </button>
+    <br/> <br/>
+    <button onClick={() => setIsDialogModalOpen(true)}>
+      Show Dialog Modal
+    </button>
+
+    <CustomModal isOpen={isCustomModalOpen} onClose={() => setIsCustomModalOpen(false)}>
+      <p>this is a <strong>CUSTOM</strong> modal</p>
+      <button onClick={() => setIsCustomModalOpen(false)}>Close</button>
+    </CustomModal>
+
+    <DialogModal isOpen={isDialogModalOpen} onClose={() => setIsDialogModalOpen(false)}>
+      <p>this is a <strong>DIALOG</strong> modal</p>
+      <button onClick={() => setIsDialogModalOpen(false)}>Close</button>
+    </DialogModal>
+    </div>
+  );
 }
 
-
-
-export default App
+export default App;
